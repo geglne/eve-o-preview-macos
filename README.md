@@ -1,23 +1,46 @@
 # EVE-O Preview for macOS
 
-`EVE-O Preview for macOS` is a native macOS companion app for running multiple EVE Online clients.
+![EVE-O Preview icon](mac/EveOPreview.Mac/icon.png)
 
-It scans running clients, shows live preview overlays, and lets you quickly switch focus to the selected window.
+`EVE-O Preview for macOS` is a lightweight companion app for EVE Online multiboxing on macOS.
 
-## Features
+It helps you keep track of multiple running clients with live preview overlays and quick client switching, while staying focused on a simple, practical workflow.
 
-- detect running EVE Online clients
-- live thumbnail overlays
-- click-to-focus client switching
-- saved local settings
-- persistent thumbnail positions
-- packaged macOS `.app` and `.dmg`
+## Screenshots
 
-## Tech
+Main app window:
+
+![Main app window](app-main-window.png)
+
+Overlay previews in action:
+
+![Overlay previews in action](overlay-in-action.png)
+
+## What it does
+
+- detects running EVE Online clients
+- shows live thumbnail previews
+- lets you click a preview to focus the matching client
+- remembers thumbnail positions
+- saves local app settings
+- ships as a ready-to-test macOS `.app` and `.dmg`
+
+## Built for macOS
+
+This project is a dedicated macOS implementation built with:
 
 - .NET 8
 - Avalonia UI
-- macOS window discovery via CoreGraphics and AppleScript/System Events
+- CoreGraphics
+- AppleScript / System Events
+
+## How to use
+
+1. Start one or more EVE Online clients.
+2. Launch `EVE-O Preview for macOS`.
+3. Allow macOS permissions if prompted.
+4. Use the main window to detect clients and manage settings.
+5. Click a floating preview to bring the matching client to the front.
 
 ## Build
 
@@ -38,22 +61,44 @@ Optional Intel build:
 RUNTIME=osx-x64 ./mac/scripts/build-dmg.sh
 ```
 
-## Permissions
+## macOS permissions
 
-Depending on macOS settings, the app may request access to:
+Depending on your macOS settings, the app may request access to:
 
 - Accessibility
 - Automation
 - Screen Recording
 
-These are used for client discovery, activation, and preview capture.
+These permissions are used for client discovery, activation, and preview capture.
 
-## Status
+## Project status
 
-This is an early public macOS release focused on the working core workflow:
+This is an early public macOS release focused on the core experience:
 
 - find running EVE clients
-- preview them
+- preview them live
 - switch between them quickly
 
-Some original desktop features are still planned and not yet implemented.
+## Known limitations
+
+- this is still an early macOS release
+- some settings are visible but not implemented yet
+- feature parity with the Windows ecosystem is not complete
+- Apple Silicon build is the default packaged output
+
+## Credits
+
+- macOS port and current project work by `SihKic`
+- inspired by the original `EVE-O Preview` idea and workflow created by the wider EVE multiboxing community
+
+## Support
+
+If this project is useful to you and you would like to support it, ISK donations are welcome in EVE Online.
+
+- in-game character: `SihKic`
+
+## Release
+
+Current packaged build output:
+
+- `mac/dist/eve-o-preview-mac-osx-arm64.dmg`
