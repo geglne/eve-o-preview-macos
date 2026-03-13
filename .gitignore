@@ -1,0 +1,14 @@
+.DS_Store
+.idea/
+.vscode/
+
+mac/dist/
+mac/EveOPreview.Mac/bin/
+mac/EveOPreview.Mac/obj/
+
+windows/**/bin/
+windows/**/obj/
+
+*.user
+*.suo
+*.pdb
