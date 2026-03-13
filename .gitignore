@@ -8,6 +8,7 @@ mac/EveOPreview.Mac/obj/
 
 windows/**/bin/
 windows/**/obj/
+windows/eve-o-preview/
 
 *.user
 *.suo
