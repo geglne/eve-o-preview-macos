@@ -5,10 +5,12 @@
 mac/dist/
 mac/EveOPreview.Mac/bin/
 mac/EveOPreview.Mac/obj/
+mac/EveOPreview.Mac/icon.original.png
 
 windows/**/bin/
 windows/**/obj/
 windows/eve-o-preview/
+windows/
 
 *.user
 *.suo
