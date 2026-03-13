@@ -1,31 +1,23 @@
 # EVE-O Preview for macOS
 
-This repository contains a macOS port-in-progress of the original Windows-only `eve-o-preview` project.
+`EVE-O Preview for macOS` is a native macOS companion app for running multiple EVE Online clients.
 
-The goal of the app is simple:
+It scans running clients, shows live preview overlays, and lets you quickly switch focus to the selected window.
+
+## Features
 
 - detect running EVE Online clients
-- show live preview thumbnails for them
-- let you quickly switch focus to the selected client
-
-## Repository layout
-
-- `mac/EveOPreview.Mac`: the macOS app built with .NET 8 and Avalonia
-- `mac/scripts/build-dmg.sh`: build and package script for the macOS `.app` and `.dmg`
-- `windows/eve-o-preview`: upstream Windows project kept for reference
-
-## Current macOS status
-
-The macOS app currently supports:
-
-- scanning running windows and matching EVE clients
 - live thumbnail overlays
-- click-to-activate client switching
-- persistent thumbnail positions
+- click-to-focus client switching
 - saved local settings
-- packaged `.app` and `.dmg` output
+- persistent thumbnail positions
+- packaged macOS `.app` and `.dmg`
 
-The macOS version is still an independent port, not a direct conversion of the Windows codebase.
+## Tech
+
+- .NET 8
+- Avalonia UI
+- macOS window discovery via CoreGraphics and AppleScript/System Events
 
 ## Build
 
@@ -35,10 +27,10 @@ From the repository root:
 ./mac/scripts/build-dmg.sh
 ```
 
-Output:
+Build output:
 
-- app bundle: `mac/dist/EVE-O Preview.app`
-- dmg: `mac/dist/eve-o-preview-mac-osx-arm64.dmg`
+- `mac/dist/EVE-O Preview.app`
+- `mac/dist/eve-o-preview-mac-osx-arm64.dmg`
 
 Optional Intel build:
 
@@ -46,17 +38,22 @@ Optional Intel build:
 RUNTIME=osx-x64 ./mac/scripts/build-dmg.sh
 ```
 
-## macOS permissions
+## Permissions
 
-Depending on your system settings, macOS may ask for:
+Depending on macOS settings, the app may request access to:
 
 - Accessibility
 - Automation
 - Screen Recording
 
-These permissions are needed for window discovery, activation, and preview capture.
+These are used for client discovery, activation, and preview capture.
 
-## Notes
+## Status
 
-- This repo currently focuses on the macOS port.
-- The upstream project in `windows/eve-o-preview` remains Windows-specific because it depends on WinForms and Windows APIs.
+This is an early public macOS release focused on the working core workflow:
+
+- find running EVE clients
+- preview them
+- switch between them quickly
+
+Some original desktop features are still planned and not yet implemented.

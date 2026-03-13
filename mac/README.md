@@ -1,10 +1,6 @@
-# macOS port workspace
+# macOS build notes
 
-This folder contains the new macOS app baseline (`EveOPreview.Mac`) and packaging scripts.
-
-## Why a separate app?
-
-The upstream project in `windows/eve-o-preview` is tied to Windows APIs (`user32`, `dwmapi`, WinForms), so a direct conversion to `.dmg` is not possible.
+This folder contains the macOS app (`EveOPreview.Mac`) and packaging scripts.
 
 ## Build DMG
 
