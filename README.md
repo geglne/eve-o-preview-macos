@@ -6,6 +6,26 @@
 
 It helps you keep track of multiple running clients with live preview overlays and quick client switching, while staying focused on a simple, practical workflow.
 
+> [!NOTE]
+> **This is a fork with a v0.2.0 pre-release build.** It contains fixes that have been offered upstream to [ciws/eve-o-preview-macos](https://github.com/ciws/eve-o-preview-macos) but are not merged there yet. The rest of this README describes the app in general; see [Install this pre-release build](#install-this-pre-release-build) for this fork.
+
+## Install this pre-release build
+
+What v0.2.0 fixes compared with v0.1.0 is listed in [RELEASE_NOTES_v0.2.0.md](RELEASE_NOTES_v0.2.0.md).
+
+1. Optional: back up your settings so you can roll back:
+   ```bash
+   cp ~/Library/Application\ Support/EveOPreview.Mac/settings.json ~/Desktop/eveo-settings-backup.json
+   ```
+2. Quit any running EVE-O Preview.
+3. Download `eve-o-preview-mac-osx-arm64.dmg` from the [v0.2.0 release](https://github.com/geglne/eve-o-preview-macos/releases/tag/v0.2.0), open it, and drag **EVE-O Preview** to Applications, replacing the old copy.
+4. Open it. When macOS says it *"could not verify"* the app, click **Done**, then **System Settings → Privacy & Security → Open Anyway**.
+5. Grant permissions as described in [macOS permissions](#macos-permissions). If you used v0.1.0 before, remove its **EVE-O Preview** entry under **Screen & System Audio Recording** and add the new app, then quit and reopen.
+
+To roll back, delete the app, reinstall [v0.1.0](https://github.com/ciws/eve-o-preview-macos/releases/tag/v0.1.0), and copy your settings backup back into `~/Library/Application Support/EveOPreview.Mac/`.
+
+Found a problem with this build? Please open an issue on [this fork](https://github.com/geglne/eve-o-preview-macos/issues).
+
 ## Screenshots
 
 Main app window:
