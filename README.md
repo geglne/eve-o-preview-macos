@@ -34,15 +34,45 @@ This project is a dedicated macOS implementation built with:
 - CoreGraphics
 - AppleScript / System Events
 
+## Install
+
+Requirements: macOS 12 or later on Apple Silicon (M1 or newer). The prebuilt release is `arm64` only; Intel Macs need to [build from source](#build) with `RUNTIME=osx-x64`.
+
+1. Download `EVE-O.Preview.zip` from the [latest release](https://github.com/ciws/eve-o-preview-macos/releases/latest).
+2. Unzip it and move `EVE-O Preview.app` to `/Applications`.
+3. The app is ad-hoc signed and not notarized, so Gatekeeper blocks the first launch with *"Apple could not verify…"*. Click **Done**, then go to **System Settings → Privacy & Security** and click **Open Anyway**.
+   - If macOS instead says the app *"is damaged and can't be opened"* (v0.1.0), click **Cancel** and remove the quarantine flag from Terminal:
+
+     ```bash
+     xattr -dr com.apple.quarantine "/Applications/EVE-O Preview.app"
+     ```
+
+4. Launch the app and grant the permissions listed under [macOS permissions](#macos-permissions). Screen Recording is not prompted for; add it manually, then quit and reopen the app.
+
 ## How to use
 
-1. Start one or more EVE Online clients.
+1. Start one or more EVE Online clients and log in a character on each. Clients are detected by their `EVE - <Character>` window title, so clients at the launcher or character selection screen are not listed.
 2. Launch `EVE-O Preview for macOS`.
 3. Allow macOS permissions if prompted.
-4. Use the main window to detect clients and manage settings.
-5. Click a floating preview to bring the matching client to the front.
+4. The client list refreshes automatically every 2 seconds. Use the main window to manage settings.
+5. Click a floating preview to bring the matching client to the front. Drag a preview to move it; its position is remembered per character.
 
 ## Build
+
+Prerequisites:
+
+- Xcode Command Line Tools (`xcode-select --install`) for `sips`, `iconutil`, and `hdiutil`
+- [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0)
+
+With Homebrew, `dotnet@8` is keg-only, so it isn't on your `PATH` after installing. Add it:
+
+```bash
+brew install dotnet@8
+echo 'export PATH="/opt/homebrew/opt/dotnet@8/bin:$PATH"' >> ~/.zshrc
+echo 'export DOTNET_ROOT="/opt/homebrew/opt/dotnet@8/libexec"' >> ~/.zshrc
+source ~/.zshrc
+dotnet --version   # 8.0.x
+```
 
 From the repository root:
 
@@ -61,15 +91,26 @@ Optional Intel build:
 RUNTIME=osx-x64 ./mac/scripts/build-dmg.sh
 ```
 
+`open` on its own relaunches whatever is already in `mac/dist`, so re-run the build script after pulling changes.
+
 ## macOS permissions
 
-Depending on your macOS settings, the app may request access to:
+All three are in **System Settings → Privacy & Security**:
 
-- Accessibility
-- Automation
-- Screen Recording
+| Permission | Used for | How it's granted |
+|---|---|---|
+| Automation → System Events | finding and raising client windows | prompt on first launch → **Allow** |
+| Accessibility (**Device Control and Data Access** on macOS 27) | controlling other apps' windows | prompt → **Open System Settings** → turn on EVE-O Preview |
+| Screen Recording (**Screen & System Audio Recording**) | reading client window titles and capturing previews | **no prompt** → click **+**, add EVE-O Preview, turn it on, then quit and reopen the app |
 
-These permissions are used for client discovery, activation, and preview capture.
+Without Screen Recording, macOS hides other apps' window titles, so no clients are detected.
+
+Each ad-hoc signed build counts as a new app to macOS. After installing a new version or rebuilding, remove the old **EVE-O Preview** entry under Screen Recording with **−** and add the new one, or the permission won't apply.
+
+## Troubleshooting
+
+- **"No EVE windows found" while clients are running:** make sure a character is logged in, then check that Screen Recording is granted to *this* copy of the app (see above) and relaunch.
+- **"is damaged and can't be opened":** see step 3 of [Install](#install).
 
 ## Project status
 
@@ -99,6 +140,8 @@ If this project is useful to you and you would like to support it, ISK donations
 
 ## Release
 
-Current packaged build output:
+Prebuilt downloads are on the [Releases page](https://github.com/ciws/eve-o-preview-macos/releases). The current release ships `EVE-O.Preview.zip` (Apple Silicon `.app`).
+
+Running `./mac/scripts/build-dmg.sh` locally produces:
 
 - `mac/dist/eve-o-preview-mac-osx-arm64.dmg`
