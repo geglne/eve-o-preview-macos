@@ -73,6 +73,12 @@ PLIST
 
 chmod +x "$APP_BUNDLE_DIR/Contents/MacOS/EveOPreview.Mac"
 
+# dotnet publish only ad-hoc signs the bare executable. Re-sign the finished
+# bundle so the signature covers Info.plist and resources; otherwise macOS
+# reports the downloaded app as "damaged".
+echo "Signing .app bundle (ad-hoc)..."
+codesign --force --deep --sign - "$APP_BUNDLE_DIR"
+
 echo "Creating DMG at $DMG_PATH..."
 mkdir -p "$DIST_DIR"
 rm -f "$DMG_PATH"
