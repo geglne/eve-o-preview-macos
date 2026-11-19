@@ -15,6 +15,16 @@
         Height="460"
         MinWidth="520"
         MinHeight="340">
+    <NativeMenu.Menu>
+        <NativeMenu>
+            <NativeMenuItem Header="Help">
+                <NativeMenu>
+                    <NativeMenuItem Header="EVE-O Preview Help" Click="OnHelpClicked" />
+                </NativeMenu>
+            </NativeMenuItem>
+        </NativeMenu>
+    </NativeMenu.Menu>
+
     <Window.Styles>
         <Style Selector="TabControl">
             <Setter Property="Padding" Value="0" />

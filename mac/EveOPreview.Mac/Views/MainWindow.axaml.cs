@@ -5,6 +5,8 @@ namespace EveOPreview.Mac.Views;
 
 public partial class MainWindow : Window
 {
+    private static readonly Uri HelpUri = new("https://github.com/ciws/eve-o-preview-macos");
+
     public MainWindow()
     {
         InitializeComponent();
@@ -20,6 +22,18 @@ public partial class MainWindow : Window
     private void OnSizeChanged(object? sender, SizeChangedEventArgs e)
     {
         UpdateResponsiveLayout();
+    }
+
+    private async void OnHelpClicked(object? sender, EventArgs e)
+    {
+        try
+        {
+            await Launcher.LaunchUriAsync(HelpUri);
+        }
+        catch
+        {
+            // Ignore failures to open the browser.
+        }
     }
 
     private void UpdateResponsiveLayout()
