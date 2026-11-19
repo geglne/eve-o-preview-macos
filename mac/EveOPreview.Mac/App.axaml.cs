@@ -13,6 +13,8 @@ namespace EveOPreview.Mac;
 
 public partial class App : Application
 {
+    private static readonly Uri ProjectUri = new("https://github.com/ciws/eve-o-preview-macos");
+
     public override void Initialize()
     {
         AvaloniaXamlLoader.Load(this);
@@ -39,6 +41,23 @@ public partial class App : Application
     }
 
     private void OnAboutClicked(object? sender, EventArgs e) => AboutPanel.TryShow();
+
+    private async void OnGitHubClicked(object? sender, EventArgs e)
+    {
+        if (ApplicationLifetime is not IClassicDesktopStyleApplicationLifetime { MainWindow: { } mainWindow })
+        {
+            return;
+        }
+
+        try
+        {
+            await mainWindow.Launcher.LaunchUriAsync(ProjectUri);
+        }
+        catch
+        {
+            // Ignore failures to open the browser.
+        }
+    }
 
     private void DisableAvaloniaDataAnnotationValidation()
     {

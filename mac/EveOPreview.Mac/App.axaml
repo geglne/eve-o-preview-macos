@@ -9,6 +9,7 @@
     <NativeMenu.Menu>
         <NativeMenu>
             <NativeMenuItem Header="About EVE-O Preview" Click="OnAboutClicked" />
+            <NativeMenuItem Header="EVE-O Preview on GitHub" Click="OnGitHubClicked" />
         </NativeMenu>
     </NativeMenu.Menu>
 
