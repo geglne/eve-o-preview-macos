@@ -102,3 +102,9 @@ If this project is useful to you and you would like to support it, ISK donations
 Current packaged build output:
 
 - `mac/dist/eve-o-preview-mac-osx-arm64.dmg`
+
+To release version X.Y.Z:
+
+1. Set `<Version>X.Y.Z</Version>` in `mac/EveOPreview.Mac/EveOPreview.Mac.csproj`. This is the only place the version is defined.
+2. Run `./mac/scripts/build-dmg.sh`. It copies the version into the app bundle, and **About EVE-O Preview** shows it.
+3. Attach `mac/dist/eve-o-preview-mac-osx-arm64.dmg` to a GitHub release tagged `vX.Y.Z`.
