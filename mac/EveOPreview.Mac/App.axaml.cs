@@ -1,3 +1,4 @@
+using System;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core;
@@ -36,6 +37,8 @@ public partial class App : Application
 
         base.OnFrameworkInitializationCompleted();
     }
+
+    private void OnAboutClicked(object? sender, EventArgs e) => AboutPanel.TryShow();
 
     private void DisableAvaloniaDataAnnotationValidation()
     {
