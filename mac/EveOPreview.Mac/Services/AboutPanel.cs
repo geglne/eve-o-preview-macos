@@ -4,7 +4,8 @@ using System.Runtime.InteropServices;
 namespace EveOPreview.Mac.Services;
 
 // Shows the standard macOS About panel, which reads the app name, icon and
-// version from the bundle's Info.plist.
+// version from the bundle's Info.plist. The build version (shown in brackets)
+// is blanked: build-dmg.sh sets it to the same value, so it showed "0.2.1 (0.2.1)".
 internal static class AboutPanel
 {
     public static void TryShow()
@@ -27,7 +28,19 @@ internal static class AboutPanel
         }
 
         objc_msgSend_Void_Bool(application, sel_registerName("activateIgnoringOtherApps:"), true);
-        objc_msgSend_Void_IntPtr(application, sel_registerName("orderFrontStandardAboutPanel:"), IntPtr.Zero);
+        var options = CreateOptions();
+        objc_msgSend_Void_IntPtr(application, sel_registerName("orderFrontStandardAboutPanelWithOptions:"), options);
+    }
+
+    // { NSAboutPanelOptionVersion: "" }. The objects are autoreleased.
+    private static IntPtr CreateOptions()
+    {
+        var stringClass = objc_getClass("NSString");
+        var dictionaryClass = objc_getClass("NSDictionary");
+        var stringWithUtf8 = sel_registerName("stringWithUTF8String:");
+        var key = objc_msgSend_IntPtr_String(stringClass, stringWithUtf8, "Version");
+        var value = objc_msgSend_IntPtr_String(stringClass, stringWithUtf8, string.Empty);
+        return objc_msgSend_IntPtr_IntPtr_IntPtr(dictionaryClass, sel_registerName("dictionaryWithObject:forKey:"), value, key);
     }
 
     [DllImport("/usr/lib/libobjc.A.dylib")]
@@ -38,6 +51,12 @@ internal static class AboutPanel
 
     [DllImport("/usr/lib/libobjc.A.dylib", EntryPoint = "objc_msgSend")]
     private static extern IntPtr objc_msgSend_IntPtr(IntPtr receiver, IntPtr selector);
+
+    [DllImport("/usr/lib/libobjc.A.dylib", EntryPoint = "objc_msgSend")]
+    private static extern IntPtr objc_msgSend_IntPtr_String(IntPtr receiver, IntPtr selector, [MarshalAs(UnmanagedType.LPUTF8Str)] string arg);
+
+    [DllImport("/usr/lib/libobjc.A.dylib", EntryPoint = "objc_msgSend")]
+    private static extern IntPtr objc_msgSend_IntPtr_IntPtr_IntPtr(IntPtr receiver, IntPtr selector, IntPtr arg1, IntPtr arg2);
 
     [DllImport("/usr/lib/libobjc.A.dylib", EntryPoint = "objc_msgSend")]
     private static extern void objc_msgSend_Void_Bool(IntPtr receiver, IntPtr selector, [MarshalAs(UnmanagedType.I1)] bool arg);
